@@ -34,7 +34,7 @@ note_taking_button = tk.Button(app, text='Note Taking', font=SIDE_LABEL_FONT, wi
                                pady=2, command=lambda: btn_function.note_taker(main_frame))
 note_taking_button.place(x=0, y=130)
 
-# ToDO Button
+# To DO Button
 todo_button = tk.Button(app, text='Todo', font=SIDE_LABEL_FONT, width=20, bg='sky blue',
                         pady=2, command=lambda: btn_function.todo_list(main_frame))
 todo_button.place(x=0, y=170)
