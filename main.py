@@ -133,5 +133,6 @@ main_frame = tk.Frame(app, width=750, height=800, bg='grey')
 main_frame.place(x=250, y=55)
 
 # btn_function.update_canvas_content(canvas, "Initial content goes here")
+tk.PhotoImage(name='img/tomato.png')
 
 app.mainloop()

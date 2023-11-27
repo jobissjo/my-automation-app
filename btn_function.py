@@ -6,7 +6,8 @@ from main_page import (pomodoro, vocab_learn, note_taking, video_downloader, pro
 TITLE_FONT: tuple[str, int, str] = ("Arial", 18, "bold")
 
 
-def pomodoro_clicked(frame, content: str = 'This is pomodoro content'):
+def pomodoro_clicked(frame:Frame, content: str = 'This is pomodoro content'):
+    # frame.update()
     pomodoro.pomodoro_func(frame, content, title_font=TITLE_FONT)
 
 
