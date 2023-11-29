@@ -1,11 +1,13 @@
 import tkinter as tk
 from datetime import timedelta
 from PIL import ImageTk, Image
+from main_page.addons_function import delete_widget
 import os
 
 
 def pomodoro_func(frame, content: str = 'Whatever content',
                   title_font: tuple[str, int, str] = ("Arial", 18, "bold")):
+    delete_widget(frame)
     PomodoroTimerApp(frame)
 
 
@@ -56,7 +58,7 @@ class PomodoroTimerApp:
 
         self.start_button = tk.Button(master, text="Start", command=self.start_timer, padx=10, pady=5,
                                       bg='light green', font=("Helvetica", 18))
-        self.start_button.pack()
+        self.start_button.place(x=50, y=650)
         self.reset_button = tk.Button(master, text="Reset", command=self.reset_timer, padx=10, pady=5, bg='sky blue',
                                       font=("Helvetica", 18))
         self.reset_button.pack()
