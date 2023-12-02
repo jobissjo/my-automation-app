@@ -1,99 +1,51 @@
 import tkinter as tk
 from main_page.addons_function import delete_widget
+from PIL import Image, ImageTk
+from tkinter import ttk
+
+book_data = [
+    {"image": "G:\\Jobi Development\\My Own Projects\\Automation Daily Task\\img\\SLAA.jpeg", "title": "Title 1",
+     "button_text": "Button 1"},
+    {"image": "G:\\Jobi Development\\My Own Projects\\Automation Daily Task\\img\\TAGR.png", "title": "Title 2",
+     "button_text": "Button 2"},
+    {"image": "G:\\Jobi Development\\My Own Projects\\Automation Daily Task\\img\\TLAM.jpeg", "title": "Title 3",
+     "button_text": "Button 3"},
+]
 
 
 def reading_list(frame: tk.Frame):
     delete_widget(frame)
-    book_data = [
-        {"bookname": "Book 1", "readed": False},
-        {"bookname": "Book 2", "readed": True},
-        {"bookname": "Book 3", "readed": False},
-    ]
 
-    app = BookApp(frame, book_data)
+    app = BookList(frame, book_data)
 
 
-import tkinter as tk
-from tkinter import messagebox
-
-
-class BookApp:
-    def __init__(self, master, books_data):
+class BookList:
+    def __init__(self, master, data):
         self.master = master
-        # self.master.title("Book List App")
+        row_frame = ttk.Frame(self.master, padding=5)
+        row_count = 0
+        for i, item in enumerate(data):
+            if i != 0 and i % 3 == 0:
+                row_count = i // 3
+                row_frame = ttk.Frame(self.master, padding=5)
+            self.create_row(row_frame, item, i, row_count)
 
-        # Initial book data
-        self.book_data = books_data
+    def create_row(self, row_frame, item, column_count, row_count):
+        # Frame to hold the row
+        # row_frame = ttk.Frame(self.master, padding=5)
+        row_frame.pack(fill=tk.X, pady=5)
 
-        # Lists to store books
-        self.reading_list = []
-        self.read_list = []
+        # Image
+        image = Image.open(item["image"])
+        img = ImageTk.PhotoImage(image)
+        img_label = ttk.Label(row_frame, image=img)
+        img_label.image = img
+        img_label.grid(row=row_count, column=column_count, padx=5)
 
-        # Create widgets
-        self.reading_frame = tk.Frame(master)
-        self.reading_frame.pack(side=tk.LEFT, padx=10, pady=10)
+        # Title
+        # title_label = ttk.Label(row_frame, text=item["title"])
+        # title_label.grid(row=0, column=1, padx=5)
 
-        self.read_frame = tk.Frame(master)
-        self.read_frame.pack(side=tk.RIGHT, padx=10, pady=10)
-
-        self.create_book_lists()
-        self.create_buttons()
-
-    def create_book_lists(self):
-        # Display reading list
-        tk.Label(self.reading_frame, text="Reading List", font=("Helvetica", 16)).pack()
-        self.reading_listbox = tk.Listbox(self.reading_frame, selectmode=tk.SINGLE)
-        self.reading_listbox.pack()
-
-        # Display read list
-        tk.Label(self.read_frame, text="Read List", font=("Helvetica", 16)).pack()
-        self.read_listbox = tk.Listbox(self.read_frame, selectmode=tk.SINGLE)
-        self.read_listbox.pack()
-
-        # Populate initial book data
-        for book in self.book_data:
-            book_name = book['bookname']
-            read_status = book['readed']
-
-            if read_status:
-                self.read_list.append(book_name)
-                self.read_listbox.insert(tk.END, book_name)
-            else:
-                self.reading_list.append(book_name)
-                self.reading_listbox.insert(tk.END, book_name)
-
-    def create_buttons(self):
-        # Button to move a book to the read list
-        self.read_button = tk.Button(self.reading_frame, text="Read", command=self.move_to_read)
-        self.read_button.pack(pady=10)
-
-        # Button to display details of the selected book
-        self.details_button = tk.Button(self.master, text="Book Details", command=self.show_book_details)
-        self.details_button.pack()
-
-    def move_to_read(self):
-        selected_index = self.reading_listbox.curselection()
-
-        if selected_index:
-            book_name = self.reading_list.pop(selected_index[0])
-            self.read_list.append(book_name)
-
-            # Update listboxes
-            self.reading_listbox.delete(0, tk.END)
-            self.read_listbox.delete(0, tk.END)
-
-            for book in self.reading_list:
-                self.reading_listbox.insert(tk.END, book)
-
-            for book in self.read_list:
-                self.read_listbox.insert(tk.END, book)
-
-    def show_book_details(self):
-        selected_index = self.reading_listbox.curselection()
-
-        if selected_index:
-            book_name = self.reading_list[selected_index[0]]
-            messagebox.showinfo("Book Details", f"Book Name: {book_name}")
-
-
-
+        # # Button
+        # button = ttk.Button(row_frame, text=item["button_text"])
+        # button.grid(row=0, column=2, padx=5)
